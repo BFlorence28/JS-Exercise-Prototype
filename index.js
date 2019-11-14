@@ -39,10 +39,27 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age) {
+  this.name = name
+  this.age = age
+  this.stomach = []
+}
+
+Person.prototype.eat = function(edible){
+  if(this.stomach.length < 10){
+    return this.stomach.push(edible);
+  }
 
 }
 
+Person.prototype.poop = function(){
+  return this.stomach = [];
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
+}
+//
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -57,8 +74,27 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model,
+  this.milesPerGallon = milesPerGallon,
+  this.tank = 0,
+  this.odometer = 0
+}
 
+Car.prototype.fill= function(gallons){
+  this.tank = this.tank + gallons;
+}
+//stretch =====
+
+Car.prototype.drive = function(distance){
+  if(this.tank * this.milesPerGallon < distance){
+    this.odometer = this.tank * this.milesPerGallon;
+    this.tank = 0;
+    return `I ran out of fuel at ${this.odometer} miles!` 
+  }else{
+    this.odometer = this.odometer + distance;
+    this.tank = this.tank - distance/this.milesPerGallon;
+  }
 }
 
 /*
@@ -68,18 +104,47 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
 
+function Baby(name, age, favoriteToy, attributes) {
+  this.name = name,
+  this.age = age,
+  this.favoriteToy = favoriteToy
 }
+
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
+//sl
+
+// function Baby(name, age, favoriteToy, attributes) {
+//   Person.call(this, attributes);
+//   (this.name = name), (this.age = age), (this.favoriteToy = favoriteToy);
+// }
+
+// Baby.prototype = Object.create(Person.prototype);
+
+// Baby.prototype.play = function() {
+//   return `Playing with ${this.favoriteToy}`;
+// };
+
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window -  if none of the other rules apply the this defaults to the window object - unless you are in strict mode in which case it returns undefined 
+
+  2. Implicit -  The object that is standing before the dot is what this keyword will be bound to
+
+  3. Explicit -  you can force a function call to use a particular object for this binding, without putting a property function reference on the object. so we explicitly say to a function what object it should use for this — using functions such as call, apply and bind
+
+  4. New - 1- An empty object is created and referenced by this variable, inheriting the prototype of the function.
+
+  Properties and methods are added to the object referenced by this.
+  
+  The newly created object referenced by this is returned at the end implicitly (if no other object was returned explicitly).
 */
 
 
